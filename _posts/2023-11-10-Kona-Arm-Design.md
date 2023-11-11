@@ -3,6 +3,7 @@ layout: post
 title: Kona Arm Design
 ---
 ### Kona Arm
+
 | Kona Arm                            |        |                                                                                                                                     |                  | ViperX 300        |             | WidowX 250  |
 | ----------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ----------------- | ----------- | ----------- |
 | Parameter                           | Value  | Unit                                                                                                                                |                  |                   |             | Joint Label | Servo | Quantity | Stall Torque (Nm) | Joint Torque (Nm) | NL Speed (rpm) |  | Joint Label | Servo | Quantity | Motor Torque (Nm) | Joint Torque (Nm) | NL Speed (rpm) |
