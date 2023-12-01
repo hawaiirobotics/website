@@ -2,7 +2,7 @@
 layout: post
 title: FDP Presentation
 date:   2023-11-27
-permalink: https://hawaiirobotics.github.io/2023/11/27/FDP-Presentation.html
+permalink: /jekyll/update/2023/11/27/FDP-Presentation.html
 ---
 ![Slide 1](/assets/FDP/FDP_Slide%20(1).PNG){:style="display:block; margin-left:auto; margin-right:auto"}
 ![Slide 2](/assets/FDP/FDP_Slide%20(2).PNG){:style="display:block; margin-left:auto; margin-right:auto"}
