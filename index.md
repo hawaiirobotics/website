@@ -1,7 +1,7 @@
 ---
 layout: home
 ---
-
+Hawaii Robotics Test
 <ul>
   {% for post in site.posts %}
     <li>

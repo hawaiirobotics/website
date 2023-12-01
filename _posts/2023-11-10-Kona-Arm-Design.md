@@ -1,6 +1,8 @@
 ---
 layout: post
 title: Kona Arm Design
+date:   2023-11-10
+categories: jekyll update
 ---
 ### Kona Arm
 
