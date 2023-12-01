@@ -2,7 +2,6 @@
 layout: post
 title: FDP Presentation
 date:   2023-11-27
-categories: jekyll update
 ---
 ![Slide 1](/assets/FDP/FDP_Slide%20(1).PNG){:style="display:block; margin-left:auto; margin-right:auto"}
 ![Slide 2](/assets/FDP/FDP_Slide%20(2).PNG){:style="display:block; margin-left:auto; margin-right:auto"}

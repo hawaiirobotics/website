@@ -2,7 +2,6 @@
 layout: post
 title: PDP Presentation
 date:   2023-10-02
-categories: jekyll update
 ---
 ![Slide 1](/assets/PDP/PDP_Slide%20(1).PNG){:style="display:block; margin-left:auto; margin-right:auto"}
 ![Slide 2](/assets/PDP/PDP_Slide%20(2).PNG){:style="display:block; margin-left:auto; margin-right:auto"}
