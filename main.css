@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    width: 50%;
+    margin: 0 auto;
+    flex: 1 0 auto;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    margin: 32px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; /* Adjust this value to set the fixed distance from the sides */
+}
+
+.title {
+    margin-right: auto; /* This will push the remaining items to the right */
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px; /* Adjust this value to set the space between the links */
+    position: absolute;
+    right: 25%; /* Position the links 25% from the right */
+}
+
+nav ul {
+    list-style-type: none;
+    justify-content: space-around;
+    text-decoration: none;
+    color: rgb(53, 53, 53);
+}
+
+nav .title {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+header, footer {
+    background-color: #FFA07A; /* Soft orange */
+    color: rgb(53, 53, 53);
+    text-align: center;
+    padding: 10px;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: rgb(53, 53, 53);
+}
+
+@media (max-width: 768px) {
+    main {
+        width: 85%;
+    }
+
+    nav {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .nav-links {
+        flex-direction: column;
+        position: static; /* Reset the absolute positioning */
+        align-items: flex-start; /* Align items to the start */
+        gap: 0px;
+    }
+    .nav-links li {
+        margin-top: 8px; /* Add this line */
+    }
+}
