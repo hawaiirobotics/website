@@ -56,7 +56,7 @@ nav .title {
 }
 
 header, footer {
-    background-color: #FFA07A; /* Soft orange */
+    background: radial-gradient(circle at 25% 10%, #ffa774, #fca350);
     color: rgb(53, 53, 53);
     text-align: center;
     padding: 10px;
@@ -69,7 +69,155 @@ footer {
 header ul li a {
     text-decoration: none;
     color: rgb(53, 53, 53);
+    font-weight: 700;
 }
+
+/* Blog Section */
+.text-box {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin: 0 0 1em;
+    font-weight: 300;
+    display: inline-block;
+    width: 100%;
+}
+
+.text-box b {
+    font-family:'Helvetica', 'Arial';
+    font-style: normal;
+    text-decoration: none;
+    color: rgb(53, 53, 53);
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin: 0;
+    font-size: 32px;
+    font-weight: 500;
+    display: inline-block;
+    width: 100%;
+}
+
+.text-box li {
+    padding-left: 1em;
+    text-indent: -1em;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    font-family:'Helvetica', 'Arial';
+    font-size: 1.25em;
+    line-height: 1.25em;
+    color: rgb(53, 53, 53);
+}
+
+.text-box:first-child {
+    margin-top: 1em;
+}
+
+.wrapper {
+    max-width: 760px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 2em;
+    padding-right: 0;
+    padding-left: 0;
+    display: block;
+}
+
+.blog-list {
+    margin-left: 0;
+    list-style: none;
+}
+
+.blog-link {
+    margin-top: 1em;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.blog-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.blog-date {
+    font-family:'Helvetica', 'Arial';
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-bottom: 1em;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.blog-post {
+    position: absolute;
+    z-index: 10;
+    top: 2em;
+    bottom: 0;
+    width: 100%;
+    max-width: 760px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    box-shadow: 0px 0px 30px 0.5em rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow: overlay;
+    cursor: default;
+    display: none;
+    opacity:0;
+}
+.blog-title-box {
+    background: 
+    linear-gradient(
+        rgba(255, 255, 255, 0.5), 
+        rgba(255, 255, 255, 0.5)
+    ),
+    url('assets/hawaii.jpg');
+    padding: 3em 0 3em 3em;
+    color: rgb(53, 53, 53);
+    width: 100%;
+}
+
+.blog-title {
+    font-size: 3em;
+    white-space: normal;
+    overflow: auto;
+}
+
+.blog-subtitle {
+    font-size: 2em;
+    white-space: normal;
+    overflow: auto;
+}
+
+.show-modal {
+    display: block;
+    opacity:1;
+}
+
+/* Modal Content */
+.blog-content {
+    text-align: left;
+    margin: 0 48px;
+    padding-bottom: 2em;
+    white-space: normal;
+    overflow: auto;
+}
+
+.blog-close {
+    background: transparent;
+    position: fixed;
+    cursor: pointer;
+    padding: 0;
+    left: 16px;
+    top: 16px;
+    border: 0;
+    scale: 80%;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Responsive */
 
 @media (max-width: 768px) {
     main {
@@ -89,5 +237,9 @@ header ul li a {
     }
     .nav-links li {
         margin-top: 8px; /* Add this line */
+    }
+
+    .blog-post {
+        max-width: 85%;
     }
 }

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>hawaii robotics</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1 class="title">Hawaii Robotics</h1>
+            <ul class="nav-links">
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="wrapper">
+            <h2>Blog</h2>
+            <hr>
+            <ul class="blog-list">
+                <!--Post #-->
+                <!--
+                <li>
+                    <h2 class="blog-link">Title</h2>
+                    <h3 class="blog-date">Date, Year</h3>
+
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto;">
+                        </button>
+                        
+                    </div>
+                </li> -->
+
+                <!--Post 1-->
+                <li>
+                    <h2 class="blog-link">Test Blog</h2>
+                    <h3 class="blog-date">Sep 18, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Test Blog</h2>
+                            <p class="blog-subtitle">Test Blog Subtitle</p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <p>This is a text box.</p>
+                            </div>
+                            <img src="./assets/Kona_Assembly.png">
+                            <div class="text-box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu tempor ante. Mauris sodales suscipit orci quis consectetur. Etiam ut sollicitudin nibh. Praesent aliquam iaculis lectus, eu gravida nulla laoreet vel. Mauris placerat convallis posuere. Nunc eu pellentesque eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec consectetur sapien non maximus vulputate. Etiam in hendrerit metus. Duis placerat egestas nunc vitae suscipit. Nunc condimentum, orci quis pulvinar finibus, neque massa varius arcu, sed porttitor nulla ex laoreet leo. Pellentesque maximus metus et cursus efficitur. Ut vestibulum posuere sapien. Nunc viverra suscipit sapien, sit amet posuere ante commodo eget. Curabitur non sem elit.</p>
+                            </div>
+                            <img src="./assets/Kona_Assembly.png">
+                            <div class="text-box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu tempor ante. Mauris sodales suscipit orci quis consectetur. Etiam ut sollicitudin nibh. Praesent aliquam iaculis lectus, eu gravida nulla laoreet vel. Mauris placerat convallis posuere. Nunc eu pellentesque eros. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec consectetur sapien non maximus vulputate. Etiam in hendrerit metus. Duis placerat egestas nunc vitae suscipit. Nunc condimentum, orci quis pulvinar finibus, neque massa varius arcu, sed porttitor nulla ex laoreet leo. Pellentesque maximus metus et cursus efficitur. Ut vestibulum posuere sapien. Nunc viverra suscipit sapien, sit amet posuere ante commodo eget. Curabitur non sem elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <p>hawaii robotics</p>
+        <p>made with &hearts; in canada</p>
+    </footer>
+    <script>
+        const triggers = document.getElementsByClassName("blog-link");
+        const modals = document.getElementsByClassName("blog-post");
+        const closeButtons = document.getElementsByClassName("blog-close");
+
+        // Function to toggle the visibility of the modal
+        const toggleModal = (index) => {
+            modals[index].classList.toggle("show-modal");
+        };
+
+        // Function to handle clicking outside the modal
+        const clickOutsideModal = (event) => {
+            for (let i = 0; i < modals.length; i++) {
+                if (modals[i].classList.contains("show-modal") && !modals[i].contains(event.target)) {
+                    toggleModal(i);
+                }
+            }
+        };
+
+        // Add event listeners to triggers and close buttons
+        for (let i = 0; i < triggers.length; i++) {
+            // Toggle modal on trigger click
+            triggers[i].addEventListener("click", (event) => {
+                event.stopPropagation(); // Prevent click from bubbling to the document
+                toggleModal(i);
+            });
+
+            // Toggle modal on close button click
+            closeButtons[i].addEventListener("click", (event) => {
+                event.stopPropagation(); // Prevent click from bubbling to the document
+                toggleModal(i);
+            });
+        }
+
+        // Event listener for clicks outside of modals
+        document.addEventListener("click", clickOutsideModal);
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
