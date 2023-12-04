@@ -308,22 +308,62 @@
                             <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
                         </button>
                         <div class="blog-title-box">
-                            <h2 class="blog-title">Controls Development</h2>
-                            <p class="blog-subtitle">Our Progress on Understanding the Controls Needed</p>
+                            <h2 class="blog-title">Electrical Development</h2>
+                            <p class="blog-subtitle">An Overview on our Electrical Systems</p>
                         </div>
                         <div class="blog-content">
                             <div class="text-box">
-                                <h2>High Lever Overview</h2>
+                                <h2>Overview</h2>
                             </div>
                             <div class="text-box">
-                                <p>Precision is paramount in addressing the primary control challenge of a robotic arm. This includes the pursuit of zero steady-state error and minimal overshoot. Achieving this hinges on optimizing the joint behavior governed by the motors, ensuring impeccable accuracy and swift settling times.</p>
+                                <p>To begin to understand what the requirements of the system are, a block diagram was made to capture the essential parts of the system shown below.</p>
+                            </div>
+                            <img src="./assets/electrical1.png">
+                            <div class="text-box">
+                                <p>In our analysis of the system's architecture, we recognized the need for three primary Printed Circuit Boards (PCBs) to effectively manage the system. The first component is the encoder board PCB, which is placed at every joint of the teacher arms, this ensures precise measurement of each joint's position. To streamline the system, we decided to implement a daisy-chain configuration for these boards, significantly reducing the need for extensive cabling and simplifying the overall software. Such an arrangement enables the software to interface with all 14 sensors over two I2C buses.</p>
                             </div>
                             <div class="text-box">
-                                <p>The Dynamixel servos we've chosen are closed-loop motors equipped with their own onboard microcontroller. Attempting your own PID control isn't necessary as these servos lack analog control of input voltage. They already possess an effective onboard controller that manages commanded torque, positioning, velocity profiles, and response time seamlessly.</p>
+                                <p>We opted to divide the sensor connections into two separate I2C buses, this decision was driven by our aim to concurrently sample the joints of the right and left teacher arms. This parallel sampling is more efficient and accurate than a single-bus system, which could cause notable delays between the sampling of the first and last joints. Such delays are particularly problematic when the arm is in motion, leading to inaccuracies.</p>
                             </div>
                             <div class="text-box">
-                                <p>We will begin by using the default PID controller that is on the Dynamixel servos when purchased. If we find that due to the dynamics of our system that the default PID values are not optimal, we will follow the Ziegler-Nichols method [5] for PID tuning. The order of tuning should be backwards, from end-effector to base. Starting the tuning process from the end-effector of the robotic arm and moving towards the base allows us to focus on improving task performance first, considering how errors might affect different parts of the arm, and making adjustments that suit each section's unique dynamics along the way.</p>
+                                <p>The choice of I2C as the communication protocol was influenced by its minimal conductor requirement. Despite the inherent challenges of extending the bus beyond the board, we have implemented several measures to mitigate the risk of communication failure. These include the incorporation of Transient Voltage Suppression (TVS) diodes, bus extenders, and careful layout considerations in the PCB (printed circuit board) design. These steps ensure robust and reliable communication throughout the system.</p>
                             </div>
+                            <div class="text-box">
+                                <p>The teacher arm board is placed near the teacher arms and facilitates communication with the two chains of encoders on the teacher arms via I2C. It also regulates the power to the sensors. To enhance safety, the board incorporates a fused connection to the encoder chain, which prevents system failures in case of a short circuit in one arm. Moreover, this board converts the I2C bus signals into a differential pair signal, subsequently transmitting them to the main board for data processing. Power supply and data interfacing with an upstream board are achieved through a standard Ethernet jack, utilizing two I2C differential signals and power.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>For additional protection, the board's outputs to the encoder chains are safeguarded by self-resetting, non-latching PTC (Positive Temperature Coefficient) fuses. This is in conjunction with an upstream fuse already present on the board's input power, which monitors current and includes an adjustable limit for power disconnection. The system's fuse values are selected to ensure that if one encoder chain's fuse is triggered, the other I2C bus remains functional, and thus the operation of the other teacher arm. Power indication LEDs are placed for easy identification of a tripped fuse. These fuses not only serve as a redundancy but also aid in troubleshooting.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>Selecting an I2C extender using a differential pair was a challenging decision, primarily due to the resulting significant data transmission delay between boards. Our goal was to minimize this delay to be well below the 30Hz or 60Hz operating frequency of the student arms. We considered several solutions: Using standard I2C signal repeaters, like those on the encoder boards, was the simplest option. This would incur minimal software complexity and cost. However, its feasibility was questionable due to the inherent limitations of I2C in transmitting over long distances and potential bus capacitance issues.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>Another solution involved integrating a microcontroller on the teacher arm board to poll data from the encoder chains and transmit complete data packets to the main board using a long-distance, noise-resistant protocol like CAN, USB, or Ethernet. While this approach would overcome distance constraints, it introduced software complexity and increased system costs.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>We ultimately opted for the LTC4331, a bus extender designed for long distances and challenging environments like robotics. This device converts I2C signals into a differential pair signal, enabling long-distance transmission with negligible delay. Although this choice incurred a higher cost, it simplified software needs, minimized latency, and allowed for flexible positioning of the teacher arms relative to the student arms.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The Honolulu Printed Circuit Board (PCB) is the main brain of a robotic arm system, managing the movements and operations of the entire system. Powered by a 12V, 50A supply, to power the whole system, including the motors, teacher arm board along with the encoders, and all lighting throughout the enclosure. This board is controlled by a Teensy 4.1 microcontroller at its core, which manages the system's function and streams vital data to a connected computer from the teacher arms for model training.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>In terms of safety and monitoring, the Honolulu PCB is equipped with multiple electronic fuses (E-Fuses) constantly monitoring the voltage buses, in addition to current sensors that constantly monitor the current to all components of the system to avoid a constant current event. The board also has an OLED screen, which serves as another output to display the overall system status and any necessary debug messages or alerts. In addition to the OLED display there are various LEDs to indicate if there is a short on any of the voltage buses to alert of a short in the system.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The board interfaces with the teacher arm board via Ethernet, with two differential pair I2C busses for either teacher arm. This ensures robust data transfer and a more synchronized movement between the student and teacher arms. Moreover, multiple temperature sensors are used throughout, monitoring the board's temperature, ensuring it operates within safe thermal limits, and shutting down in case of a component overheating. Physically, the Honolulu PCB utilizes a connectorized design to simplify integration into the student arm, for easy maintenance, and swapping of damaged components.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The Honolulu PCB is part of a larger, dynamic system. It collects data from the teacher arms as learning data for the student arms, enabling them to eventually perform tasks autonomously after learning from the collected data.</p>
+                            </div>
+                            <div class="text-box">
+                                <h2>Camera Selection</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>To select a camera, we were considering a couple different variables these are outlined in the table below.</p>
+                            </div>
+                            <img src="./assets/electrical2.png">
+                            <img src="./assets/electrical3.png">
+                            <img src="./assets/electrical4.png">
                         </div>
                     </div>
                 </li>
