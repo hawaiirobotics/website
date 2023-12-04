@@ -22,7 +22,7 @@
             <h2 style="margin-top: 16px;">Blog</h2>
             <hr>
             <ul class="blog-list">
-                <!--Post 3-->
+                <!--Post 6-->
                 <li>
                     <h2 class="blog-link">FDP</h2>
                     <h3 class="blog-date">Nov 27, 2023</h3>
@@ -62,6 +62,176 @@
                             <img src="./assets/FDP/FDP_Slide (25).PNG">
                             <img src="./assets/FDP/FDP_Slide (26).PNG">
                             <img src="./assets/FDP/FDP_Slide (27).PNG">
+                        </div>
+                    </div>
+                </li>
+                <!--Post 5-->
+                <li>
+                    <h2 class="blog-link">Controls Development</h2>
+                    <h3 class="blog-date">Nov 24, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Controls Development</h2>
+                            <p class="blog-subtitle">Our Progress on Understanding the Controls Needed</p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <h2>A High Level Overview</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>Precision is paramount in addressing the primary control challenge of a robotic arm. This includes the pursuit of zero steady-state error and minimal overshoot. Achieving this hinges on optimizing the joint behavior governed by the motors, ensuring impeccable accuracy and swift settling times.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The Dynamixel servos we've chosen are closed-loop motors equipped with their own onboard microcontroller. Attempting your own PID control isn't necessary as these servos lack analog control of input voltage. They already possess an effective onboard controller that manages commanded torque, positioning, velocity profiles, and response time seamlessly.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>We will begin by using the default PID controller that is on the Dynamixel servos when purchased. If we find that due to the dynamics of our system that the default PID values are not optimal, we will follow the Ziegler-Nichols method [5] for PID tuning. The order of tuning should be backwards, from end-effector to base. Starting the tuning process from the end-effector of the robotic arm and moving towards the base allows us to focus on improving task performance first, considering how errors might affect different parts of the arm, and making adjustments that suit each section's unique dynamics along the way.</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Post 4-->
+                <li>
+                    <h2 class="blog-link">Software Development</h2>
+                    <h3 class="blog-date">Nov 16, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Software Development</h2>
+                            <p class="blog-subtitle">A Reflective Log at our Software Development</p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <h2>Language Selection</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>Given the substantial software component of this project, our choice gravitated towards ROS (Robot Operating System). ROS, not a programming language but a middleware, provides a framework that supports multiple languages like C++ and Python, offering a robust ecosystem of libraries and tools for building complex robotic systems with flexibility in language choice. Accessing these resources holds immense value for our team, especially considering our limited background in robotics software. The Humble distribution of ROS2 will be used as it is the latest stable release of ROS2.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>For our project, the choice between Python and C++ within the ROS framework was a thoughtful process. While C++ offered powerful performance and precise control, Python's readability and quick prototyping won us over. We were drawn to Python's simplicity, its wealth of libraries, and how it streamlined our work on complex algorithms and hardware connections. Ultimately, Python's user-friendly nature and faster development cycles aligned better with our team's needs.</p>
+                            </div>
+                            <div class="text-box">
+                                <h2>Architecture</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>As a starting point, we researched industry standards in robotics, focusing on arms using Dynamixel servos. Two arms that were investigated in depth were the InterbotixX series arms from Trossen Robotics and Robotis' openManipulatorX series arm. Both offer 4, 5, and 6 DOF arms with central open-source ROS repositories. </p>
+                            </div>
+                            <div class="text-box">
+                                <p>Upon exploring the InterbotixX Arm repository (interbotix_ros_manipulators/interbotix_ros_xsarms), it was discovered that Interbotix has created an open-source ROS toolbox that features an API meant to command robotic arms powered by Dynamixel servos. Leveraging Dynamixels' ROS-compatible SDK from Robotis, this API communicates with the servo motors, enabling streamlined trajectory execution via straightforward commands. The API fetches crucial robot information from the robots URDF file and necessitates motor and mode configuration via YAML files, alongside matrices defining the robot's forward kinematics and joint screw axes. This chosen API streamlines the development process for controlling an Interbotix arm and gripper by abstracting complex ROS interactions into easy-to-use Python classes. This abstraction simplifies movement control through intuitive methods, such as setting joint positions, defining end effector poses, and executing trajectories. Additionally, it ensures safety by checking joint limits, offers predefined arm positions for convenience, and provides functions for status retrieval, like retrieving current joint commands and end effector poses. Embracing this API in our project promises a significant reduction in code complexity thanks to its ability to facilitate straightforward control and manipulation of robotic arms and grippers. Hence, we would like to leverage this API in our project.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>Following the Interbotix structure there will be 2 ROS packages from interbotix in the code: interbotix_xs_sdk, and interbotix_xs_modules which has the arm API. Furthermore, we will need a ROS package to launch the Dynamixel SDK, which we will call hawaii_control. We will need a package to load in the robots URDF (Unified Robotics Description Format) file and launch the robot state publisher and joint state publisher, which we will call hawaii_descriptions. Finally we will need a package to launch two separate instances of the aforementioned packages to accommodate for there being two robotic arms in the system. This final package will be called hawaii_teleop.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>Creating multiple packages to handle various aspects of the code instead of one monolithic package is deliberate. Employing multiple distinct ROS packages ensures a modular project structure, dividing it into more manageable units. This strategy fosters code reuse, eases maintenance, and enables targeted enhancements to specific components, all without affecting the entire project.</p>
+                            </div>
+                            <img src="./assets/software1.png">
+                            <div class="text-box">
+                                <p>As shown below, the hawaii_teleop ROS package will start communication with 2 arms and 4 cameras. Each arm will interact with separate instances of the Dynamixel control SDK. Commands will pass from our desktop through a USB converter to the student servos. On the receiving end, a teensy microcontroller on our Honolulu board will read joint states from the teacher arm encoders and broadcast them to the desktop. These joint states will be used to command the student arms via the ARM API. We'll record images, joint positions, and velocities and compile them into an HDF5 file for potential model training, though our primary goal is teleoperation and data collection.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>This modular software architecture also allows for one arm tele-operation as well as two arm tele-operation. For two arm tele-operation, the user can launch the hawaii_teleop package. Additionally, for single arm tele-operation, the user can launch the hawaii_control package, providing the name of the arm it would like to use.</p>
+                            </div>
+                            <div class="text-box">
+                                <h2>Forward Kinematics and Screw Axes</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>An essential part of robotic control is the forward kinematics of the system. As there are elements of the system that may still be revised as we get into the assembly and commissioning phases of the project, the kinematics of the system may change. Rather than performing the complex matrix operations by hand each time, a script was created which can generate a transformation matrix (from base to end effector) and a screw axes matrix of the system from the robots URDF file. This will allow quick and iterative design cycles where the URDF file can be exported from SolidWorks, and fed into the script to generate the appropriate matrices. </p>
+                            </div>
+                            <div class="text-box">
+                                <p>The script operates via three primary functions:<br>
+                                    1.	_build_link_lists: Constructs the lists of transformations and links. It iterates backward from the specified end effector link to the base frame, gathering information about links, joints, transformations, and revolute joints and their axes. This builds essential structures used in further calculations.<br>
+                                    2.	_calc_M: Computes the homogeneous transformation matrix (M) representing the end effector's pose in SE(3) space. It utilizes forward kinematics to derive this matrix based on the specified base_frame.<br>
+                                    3.	_calc_Slist: Determines the list of screw axes. It calculates the screw axes using the stored axis and origin information, building a 6xN matrix where N is the number of revolute axes.<br>
+                                    </p>
+                            </div>
+                            <div class="text-box">
+                                <p>The scripts functionality was validated by utilizing a URDF file for the Viperx300 arm from Trossen Robotics. The results generated by the script were cross-referenced with the forward kinematics and screw axes matrices available in their arm's code base. The script's output perfectly matched the existing data.</p>
+                            </div>
+                            <div class="text-box">
+                                <h2>Teacher Arm</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>The teacher arms will feature 7 encoders each. The encoders are absolute encoders, therefore we will use the values of the encoders at each joint of the teacher arms (likely with an offset) to control the positions of each joint on the student arms. </p>
+                            </div>
+                            <div class="text-box">
+                                <p>One of the reasons that the Teensy 4.1 was chosen, is that it offers separate I2C hardware interfaces. Since we have 2 arms we will connect the encoders of the left teacher arm to one I2C port and the encoders of the right teacher arm to another. In Arduino each instance of Wire (or Wire1, Wire2, etc., depending on how many I2C ports your microcontroller supports) manages its own I2C communication, allowing for simultaneous communication with multiple I2C devices connected to different ports. This allows for concurrency without blocking as they operate on separate hardware interfaces. Therefore we will use Wire for one arm and Wire1 for the other.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>We have set an objective sampling rate of 60 readings  (of all 14 encoders) per second. We should be able to reach this goal based on the following calculations.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>We will need a transaction of 4 bytes with 11 bits each (1 start bit, 8 address bits, 1 R/W bit and 1 ACK bit) to read a sensor over I2C. This results in 44 bits. At 100kHz that is 440us. However the chip has propagation delays totaling 63.2us (t_start_prop + t_stop_prop + clk stretch time) so we get a total of 503.2us to sample 1 sensor.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>For 7 encoders (or 2x7 in parallel) it will take 3.52ms and for 14 sensors one at a time it will take 7.04ms. To sample at 30Hz for both arms in parallel it will take 105.6ms and at 60Hz, it will take 211.34ms. Therefore, we should be able to easily reach our 60Hz sampling rate objective.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The code to read from all encoders is fairly straightforward. First, we will write a value of 0x0E to the sensor indicating that we want to read a raw angle. Then we will request the angle data from the encoder and convert it to degrees/radians. This will happen in parallel for each arms chain of encoders. An example is shown below.</p>
+                            </div>
+                            <img src="./assets/software2.png">
+                            <div class="text-box">
+                                <p>The angle data for each cycle will be grouped into packets which can be easily ingested by the desktop computer. The structure of the data will be something like this:</p>
+                            </div>
+                            <div class="text-box">
+                                <p>{J1R, J2R, J3R, J4R, J5R, J6R, GR, J1L, J2L, J3L, J4L, J5L, J6L, GL}<br>
+                                    {0.123, 0.456, 0.789, ... , 0.987}<br>
+                                    {1.234, 1.567, 1.890, ... , 1.987}
+                                    </p>
+                            </div>
+                            <div class="text-box">
+                                <p>The first packet will identify which joint and which arm (right or left) each value in the packet corresponds to. The following packets will hold the angular data received from the encoders. We will not wait for an acknowledgement from the desktop. Firstly, we will be able to see whether or not the student arms are matching the teacher arms movements. Secondly, since the encoders are absolute, losing occasional data packets doesn't significantly impact our application. </p>
+                            </div>
+                            <div class="text-box">
+                                <h2>Proof of Concept</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>It was essential to verify that the Interbotix arm API can be used to control our robot design. We started by investigating how the Interbotix arm API is used by Trossen Robotics themselves. As discussed earlier, the API requires access to the robots description (which can be found via the URDF), the robots forward kinematics and screw axes matrices, and yaml files identifying which dynamixel motor corresponds to each joint, and defining the operating modes of the motors. A challenge that we came across is that the gripper design Trossen Robotics uses is quite different from the gripper design of our system. In order to address this, we located the code pertaining to the gripper in the API and made modifications in order to support our gripper configuration.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>As shown below, our robot can be visualized in Rviz2 simulation. Furthermore, we have been able to fully control the robot with the Interbotix API with the aforementioned modifications.</p>
+                            </div>
+                            <img src="./assets/rviz.gif">
+                            <div class="text-box">
+                                <p>We also needed to validate that the Interbotix API could be used to control a Dynamixel servo. We created a custom URDF file which featured a single joint of a robot. Additionally, a YAML file was created to point the Dynamixel SDK to a servo with a matching ID over the proper serial port. We were successfully able to command the servo to a variety of positions via the arm API. In the image below, you can see that the position of the joint in simulation matches the position of the servo in real life.</p>
+                            </div>
+                            <img src="./assets/software3.png">
+                            <div class="text-box">
+                                <p>Stay tuned for updates as we get more hardware together and start integration!</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Post 3-->
+                <li>
+                    <h2 class="blog-link">Electrical Development</h2>
+                    <h3 class="blog-date">Nov 10, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Controls Development</h2>
+                            <p class="blog-subtitle">Our Progress on Understanding the Controls Needed</p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <h2>High Lever Overview</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>Precision is paramount in addressing the primary control challenge of a robotic arm. This includes the pursuit of zero steady-state error and minimal overshoot. Achieving this hinges on optimizing the joint behavior governed by the motors, ensuring impeccable accuracy and swift settling times.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The Dynamixel servos we've chosen are closed-loop motors equipped with their own onboard microcontroller. Attempting your own PID control isn't necessary as these servos lack analog control of input voltage. They already possess an effective onboard controller that manages commanded torque, positioning, velocity profiles, and response time seamlessly.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>We will begin by using the default PID controller that is on the Dynamixel servos when purchased. If we find that due to the dynamics of our system that the default PID values are not optimal, we will follow the Ziegler-Nichols method [5] for PID tuning. The order of tuning should be backwards, from end-effector to base. Starting the tuning process from the end-effector of the robotic arm and moving towards the base allows us to focus on improving task performance first, considering how errors might affect different parts of the arm, and making adjustments that suit each section's unique dynamics along the way.</p>
+                            </div>
                         </div>
                     </div>
                 </li>
