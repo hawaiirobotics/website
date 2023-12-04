@@ -11,6 +11,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+.index-body {
     background-image: url('./assets/Kona_Assembly.png');
     background-size: contain;
     background-position: center;
