@@ -65,6 +65,97 @@
                         </div>
                     </div>
                 </li>
+                <!--Post 6-->
+                <li>
+                    <h2 class="blog-link">Mechanical Development</h2>
+                    <h3 class="blog-date">Nov 26, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Mechanical Development</h2>
+                            <p class="blog-subtitle">Progress on the Student Arm, Teacher Arm, and Enclosure</p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <h2>Overview</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>After the design concept selection, the preliminary design phase can begin. A lot of inspiration was drawn from the ALOHA paper [1]. The student arms should be enclosed in a rigid structure, with a consistent and well lit environment. The rigid enclosure helps keep people safe from the robots, and also provides a convenient way to mount the arms rigidly and at a fixed distance from each other. A consistent environment and good lighting is important for the model to be able to stay consistent. For example if we collected data at home, trained a model, and then brought the system to symposium and the cameras could see different things in the background the system ma behave differently. For this reason we want to use all opaque paneling with all lighting contained in the enclosure. An effort will be made to try to reduce the complexity of the environment, keeping it as simple as possible.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>As outlined in our design concept selection, the 2 teacher arm teleoperation system won out over the exoskeleton and VR/AR approach. In order to communicate more clearly how we imagine this system working, please see the image below. Essentially the teacher arms are a version of the student arms that are kinematically equivalent, but much lighter and simpler.</p>
+                            </div>
+                            <img src="./assets/mechanical1.png">
+                            <div class="text-box">
+                                <p>As can be seen in the picture above the teacher arms have a 4 bar mechanism and springs. This helps to make the system weightless, reducing the load on the operator, which is a common complaint from ALOHA users [1]. The design of this system will be broken down in another section of this report. We envision the teacher arms existing as a separate piece of equipment that can be used on other student arm systems, and almost acts like a “mouse” or “remote” for them. We also have the ambitious goal of using the teacher arms on their own for training in simulation, and are partnered with a researcher to test this method of training out.</p>
+                            </div>
+                            <div class="text-box">
+                                <h2>Student Arms</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>In order to engineer the best arms possible, and optimize on cost, it was important to start from first principles. What are the actual hard requirements we need to meet? Why do they exist? Why do we exist? Once these questions have been pondered, the optimal arm design can be found from these requirements. To do this we start by listing the requirements in our arm calculator tool, and then input some assumed values (which get iterated throughout the design process) such as linkage length and masses. In the case of the table below the requirements are marked in blue, the unknown values in yellow, and the assumed values in orange. As we iterate, the assumed values turn into more “design inputs” that can technically be changed but are effectively locked for all intents and purposes. Once the rough geometry of the arm is sorted out, and the input speeds and loads are set we can start to calculate joint torques and the loads across the arm, this is shown in the table below.</p>
+                            </div>
+                            <img src="./assets/mechanical2.png">
+                            <div class="text-box">
+                                <p>Our motor selection tool can be seen in the table below. The motor selection also feeds back the weight of each motor into the torque requirements for the arm. This allows us to iterate on motors and see the changes to the joint torques live. The most important part of this calculation is taking into consideration motor nonlinearities, since motors don’t just have a constant speed and torque, they are both values that change in different operating regions of the motor – which this calculation accounts for. It also provides a visually intuitive way of viewing the factor of safety, allowing for quick iteration through 50+ different options for motors. Finally, the cost is considered on the far right column, this is very important given how expensive these servos are. This tool is one of the ways we were able to drastically reduce the cost of this arm compared to the ALOHA system which costs roughly twice as much [1].</p>
+                            </div>
+                            <img src="./assets/mechanical3.png">
+                            <div class="text-box">
+                                <p>Finally the joint torques are used again to calculate how stiff the assembly has to be. This requirement can be broken down into how stiff each joint needs to be, by assuming that each part in series has similar stiffness. To do this we take the maximum deflection requirement, and the maximum payload, and get a linear stiffness. This linear stiffness can be converted to an angular stiffness using the reach of the arm. Then each linkage in the series elastic stack up is designed to meet a fraction of this deflection, such that the total deflection of the system is within spec. This calculation as well as one of many FEA simulations is shown in the image below.</p>
+                            </div>
+                            <img src="./assets/mechanical4.png">
+                            <div class="text-box">
+                                <p>For the structural design of the arm, we found it was cost optimal to reduce the weight of the linkages, especially in the forearm and gripper portion of the arm since the weight contributes a higher moment. To reduce weight as much as possible, we decided to use carbon fiber tube sections which are extraordinarily stiff, strong, and very effective at reducing EMI in cables routed through the tubes. To connect the carbon fiber, three technologies will be utilized. The first it SLM Metal 3D printing, which allows us to print generatively designed mass optimized parts out of exotic materials like stainless steel. The linkage on J2 (the shoulder) and J3 (the elbow) are manufactured using this technology. In joints with tricky geometry, CNC machined 6061 aluminum will be used, and in simpler joints, bent aluminum sheet metal will be used. The final design of the student arm can be seen in the image below.</p>
+                            </div>
+                            <img src="./assets/mechanical5.png">
+                            <div class="text-box">
+                                <h2>Teacher Arms</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>The design of the teacher arms is one of the biggest levers we have to make this project successful. This is because other attempts at making them have significant downsides, mainly due to ease of use and cost. For example, in both GELLO [4] and ALOHA [1] user fatigue is mentioned. And from users who we have surveyed, they mention it being very painful on the fingers to operate for long periods of time – typical for gathering training data. This is mostly because both GELLO and ALOHA use servos as sensors, they do not power them on at all, they just read the position from them. From these points we can generate a list of improvements to keep in mind during the design phase:</p>
+                            </div>
+                            <div class="text-box">
+                                <p>1.   Easy gripper activation, comfortable to hold<br>
+                                    2.   Virtually weightless to move around<br>
+                                    3.   Low cost</p>
+                            </div>
+                            <div class="text-box">
+                                <p>Starting with the gripper improvements, both GELLO and ALOHA have similar designs. They both force the user to backdrive a powerful servo in order to read the position, in the ALOHA case there is also a ton of friction and the movement is non-linear. Please see the picture below for a detailed view of the ALOHA teacher arm end effector.</p>
+                            </div>
+                            <img src="./assets/mechanical6.png">
+                            <div class="text-box">
+                                <p>Next is the weightlessness, and since ALOHA and GELLO both use servos on all joints, the arm is partially held by friction. But this is also a bad thing since the user has to backdrive all these servos to move. Instead we invision just using encoders on all the joints, and bushings to reduce the friction. This will lead to seamless, low force movements. We also plan on using passive springs to reduce the weight of the system felt by the user, and for this we look to the common desk lamp shown in the picture below.</p>
+                            </div>
+                            <img src="./assets/mechanical7.png">
+                            <div class="text-box">
+                                <p>Placing the springs is quite a difficult problem. A four bar linkage, like the one in the picture above can be used to keep the second linkage spring in a fixed position, but choosing the mounting positions of these springs is hard. Because of this, we have developed a tool that performs inverse kinematics on 5000 normally distributed points around the main working envelope, and converges on the optimal spring, and optimal mounting locations to make the system completely weightless. A screenshot of this tool while solving this optimization problem is shown in the image below.</p>
+                            </div>
+                            <img src="./assets/mechanical8.png">
+                            <div class="text-box">
+                                <p>Our current progress on the teacher arm is a prototype to validate the kinematics and the encoder strategy. Pictures of the modular bending and twisting joints can be seen below and a demonstration of the arm can be seen under that. It’s currently not sprung and heavier than we would like it, so a new iteration is required. The next version will incorporate the four bar linkage, springs, and smaller encoder PCBs. The structure will also shift to carbon fiber to make it as light as possible.</p>
+                            </div>
+                            <img src="./assets/mechanical9.png">
+                            <img src="./assets/mechanical10.png">
+                            <div class="text-box">
+                                <h2>Enclosure</h2>
+                            </div>
+                            <div class="text-box">
+                                <p>The enclosure houses the student arms and serves a couple purposes. The first is rigid mounting for both arms holding them at precise locations from one another with a frame that is strong enough to minimize movement of the base. Especially as the system is semi portable this is an important aspect of the design. The enclosure also allows for mounting points of electronics and harnesses which need to connect to the teacher arms and student arms. The enclosure serves a safety purpose preventing injury while the robot is running. It also acts to provide a consistent background for the vision system and consistent lighting. Since it is sealed from external lighting and has its own internal lighting, we have control over how the robot and work area are lit so we can maximize repeatability with minimal scenery changes.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The enclosure itself is constructed of 4040 aluminum extrusion with custom gusset plates and corner joints to hold the pieces together. For the front and back there are sliding doors which use rollers that run in the extrusion. The sliding doors themselves are also composed of 4040 aluminum extrusion. The cameras that aren’t on the arms which are the top and front facing cameras mount directly to the extrusion and wires along with light strips are routed along the extrusion. The panels are composed of high-density fiberboard with a white acrylic coating on one side. This matte white coating gives a consistent background and helps give good contrast against the arms and objects being handled.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>The fiberboard on the bottom of the enclosure has small semi-circular cut outs for wire routing in the corners which can be run through the bottom of the enclosure to the Honolulu board. The Honolulu board is mounted on the left side of the enclosure. A registered jack connector is used to connect to the student arms and a small electrical box with the high voltage to low voltage convertor is also located on this side of the enclosure. The E-Stop is affixed to the electrical box to cut power to the system which would include any attached student arm system through the registered jack connection. When moving the system around it can be placed on a table with caster wheels or easily carried around. Our enclosure is designed in such a way where it is easy to manufacture, assemble and modify. Using extrusion, we achieve these goals as extrusion is simple to source and is analogous to LEGO for mechanical engineers.</p>
+                            </div>
+                            <div class="text-box">
+                                <p>Another major part of the enclosure is the lighting control through integrated light strips. The light strips we have selected utilize WS2812 individually addressable LEDs. These LEDs allow for the control of color and brightness across each individual LED, and we target about 100 of them throughout the enclosure. This will allow us to adjust where the light is coming from and the color which is used. This can help us achieve the contrast we require from the cameras and minimize shadows. This level of control will give the flexibility to tune the system to get the most out of it. The LEDs are fused in such a way that a short across any point in the strip will trip an internal fuse preventing damage to the strip or any component which encounters it.</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <!--Post 5-->
                 <li>
                     <h2 class="blog-link">Controls Development</h2>
