@@ -22,6 +22,42 @@
             <h2 style="margin-top: 16px;">Blog</h2>
             <hr>
             <ul class="blog-list">
+                <!--Post 9-->
+                <li>
+                    <h2 class="blog-link">Gripper Teleop Achieved</h2>
+                    <h3 class="blog-date">Jan 25, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Gripper Joint Teleoperation Achieved</h2>
+                            <p class="blog-subtitle"></p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <p>After assembling one of the PCBs for the gripper joint on the teacher arm, we wanted to test out teleoperation. The teacher arm gripper has an angular range of 68 degrees which we mapped to the 360 degree range of our student arm's gripper. The encoder board was connected to an arduino, and the value of the encoder was written to our desktop computer over serial. An image of the setup can be seen below.</p>
+                            </div>
+                            <img style="margin-top: 16px; width: 50%; display: block; margin-left: auto; margin-right: auto;" src="./assets/GripperEncoderTest.jpg">
+                            <div class=""text-box>
+                                <p>On the desktops end, we connect to the serial port, read the values as they come in and pass them to a buffer where they are then used to command the gripper motors position. This worked right away which was fantastic. However, we noticed that as time progressed, there was a growing delay happening between the commanded position from the teacher gripper and the actual position of the student arms gripper position. By monitoring the buffer size, we saw that it was linearly increasing in size as time passed. This was a huge cause for concern. It would mean that there were significant inefficiencies in our code resulting in the desktop program only be able to process and consume ~25 position commands per second. We had initially estimated that we would require it to run at 50Hz for smooth teleoperation and sufficient data collection. Additionally, we have yet to add 13 more motors and 4 cameras which will add significantly more load to the program.</p>
+                            </div>
+                            <br>
+                            <div class="text-box">
+                                <p>Eventually we discovered the root of the problem and were relieved to find that it was an extremely easy fix. We had forgotten to remove a time delay in the method that sends the position commands to the individual motors from when this code had been running in simulation. After removing this delay we were able to reach 70Hz with no problems.</p>
+                            </div>
+                            <div class="text-box">
+                                <h1 style="text-align: center;">Teleoperation at 70 Hz</h1>
+                            </div>
+                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                                <source src="./assets/GripperTeleop.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>                                                     
+                        </div>
+                        
+                    </div>
+                </li>
+                <!--Post 9-->
                 <!--Post 8-->
                 <li>
                     <h2 class="blog-link">Gripper Position Control</h2>
@@ -38,7 +74,7 @@
                             <div class="text-box">
                                 <p>Up until this point, the gripper was being controlled via PWM. When writing and testing the code to control the gripper with a position command we faced some challenges. The dynamixel servos that were selected for this project have phenomenal software support. This includes a GUI which can be used to modify various servo parameters as well as command the servos to specific goal positions. In the GUI, the gripper would open when commanded to 360 degrees, and close when commanded to 36 degrees. However, when we tried to command the gripper to these positions via the API that we built, the gripper did not go to the expected position. It took several hours of debugging, and walking all the way down the stack to the dynamixel structures, before we finally discovered the issue. All of the dynamixel servos in our robot have a 180 degree offset. This means that the positional range of the servos only accepts values from -180 to 180 degrees. When we would command the gripper to 36 degrees, expecting it to close, it was actually going to what we understood to be 216 degrees, explaining why the gripper was not closing all of the way. After reflecting our discovery in our code we were able to accomplish accurate position control of our gripper!</p>
                             </div>
-                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px;">
+                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
                                 <source src="./assets/GripperControl.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>                            
