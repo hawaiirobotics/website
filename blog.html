@@ -22,10 +22,47 @@
             <h2 style="margin-top: 16px;">Blog</h2>
             <hr>
             <ul class="blog-list">
+                <!--Post 10-->
+                <li>
+                    <h2 class="blog-link">First Arm Assembly</h2>
+                    <h3 class="blog-date">Feb 5, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Assembling The First Arm</h2>
+                            <p class="blog-subtitle"></p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <p>Before assembling the arm we spent a considerable amount of time determining the joint limits, double and triple checking them, adn making sure that joint commands outside of these bounds are rejected. We started by picking "zero" positions that were intuitive and easy to assemble. This just means how the links will be attached to the servos when they are at their 0 degree positions. The result can be seen below.</p>
+                            </div>
+                            <img style="margin-top: 16px; width: 50%; display: block; margin-left: auto; margin-right: auto;" src="./assets/ArmZeroPositions.png">
+                            <div class=""text-box>
+                                <p>Next we used a simulation of our robot to determine what appropriate limits were for all of the joints. We used these as a starting point, but they were adjusted as we assembled the arm. We assembled the links of the arm one by one, starting with the base. For each joint, we commanded it to the limits in each direction, setting an extremely slow movement speed. As the joints moved, we confirmed that none of the linkage material was colliding with anything, and that the wires connecting the servos together had sufficient slack.</p>
+                            </div>
+                            <br>
+                            <div class=""text-box>
+                                <p>Finally, the arm was complete! We determined a good sleep position for the robot and watched as all of the code written up to this point was finally put to use in real life.</p>
+                            </div>
+                            <br>
+                            <div class="text-box">
+                                <h2 style="text-align: center;">Arm Moving to Sleep Positions</h1>
+                            </div>
+                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                                <source src="./assets/ArmMovingToSleepPosition.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>                                                     
+                        </div>
+                        
+                    </div>
+                </li>
+                <!--Post 10-->
                 <!--Post 9-->
                 <li>
                     <h2 class="blog-link">Gripper Teleop Achieved</h2>
-                    <h3 class="blog-date">Jan 25, 2023</h3>
+                    <h3 class="blog-date">Feb 2, 2023</h3>
                     <div class="blog-post">
                         <button type="button" class="blog-close">
                             <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
