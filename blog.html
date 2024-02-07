@@ -22,6 +22,31 @@
             <h2 style="margin-top: 16px;">Blog</h2>
             <hr>
             <ul class="blog-list">
+                <!--Post 8-->
+                <li>
+                    <h2 class="blog-link">Gripper Position Control</h2>
+                    <h3 class="blog-date">Jan 25, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Gripper Position Control</h2>
+                            <p class="blog-subtitle"></p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <p>Up until this point, the gripper was being controlled via PWM. When writing and testing the code to control the gripper with a position command we faced some challenges. The dynamixel servos that were selected for this project have phenomenal software support. This includes a GUI which can be used to modify various servo parameters as well as command the servos to specific goal positions. In the GUI, the gripper would open when commanded to 360 degrees, and close when commanded to 36 degrees. However, when we tried to command the gripper to these positions via the API that we built, the gripper did not go to the expected position. It took several hours of debugging, and walking all the way down the stack to the dynamixel structures, before we finally discovered the issue. All of the dynamixel servos in our robot have a 180 degree offset. This means that the positional range of the servos only accepts values from -180 to 180 degrees. When we would command the gripper to 36 degrees, expecting it to close, it was actually going to what we understood to be 216 degrees, explaining why the gripper was not closing all of the way. After reflecting our discovery in our code we were able to accomplish accurate position control of our gripper!</p>
+                            </div>
+                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px;">
+                                <source src="./assets/GripperControl.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>                            
+                        </div>
+                        
+                    </div>
+                </li>
+                <!--Post 8-->
                 <!--Post 7-->
                 <li>
                     <h2 class="blog-link">PCB Arrival</h2>
