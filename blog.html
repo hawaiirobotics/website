@@ -38,10 +38,10 @@
                             <div class="text-box">
                                 <p>The servo at the gripper joint on the arm doesn't have current control. Instead, the servo monitors the "present load" it experiences. The dynamixel can protect itself by detecting dangerous situations that could occur during the operation including overload protection. If the absolute value of the present load exceeds 1000 then the servo will trigger an overload error and stop the servo. This posed itself as problem for us because as someone controls the gripper, if they squeeze too hard while trying to grasp an object, the motor with error out and need to be reset. Since this present load register is accessible, we implemented a feature in the code to save the last "safe gripper position" each time a command is sent and the present load is greater than -300. Then if the present load ever exceeds -300, the command to the gripper servo is rejected unless the commanded servo position is greater than or equal to the last safe gripper position (the command is to open the gripper). This addition has been successful in ensuring that the gripper servo never experiences an overload error when gripping an object.</p>
                             </div>
-                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                            <video class="blog-video" controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
                                 <source src="./assets/PresentLoadLimiting.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
-                            </video>        
+                            </video>       
                         </div>
                     </div>
                 </li>
@@ -125,7 +125,7 @@
                             <div class="text-box">
                                 <h2 style="text-align: center;">Arm Moving to Sleep Positions</h1>
                             </div>
-                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                            <video class="blog-video" controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
                                 <source src="./assets/ArmMovingToSleepPosition.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>                                                     
@@ -160,7 +160,7 @@
                             <div class="text-box">
                                 <h1 style="text-align: center;">Teleoperation at 70 Hz</h1>
                             </div>
-                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                            <video class="blog-video" controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
                                 <source src="./assets/GripperTeleop.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>                                                     
@@ -185,7 +185,7 @@
                             <div class="text-box">
                                 <p>Up until this point, the gripper was being controlled via PWM. When writing and testing the code to control the gripper with a position command we faced some challenges. The dynamixel servos that were selected for this project have phenomenal software support. This includes a GUI which can be used to modify various servo parameters as well as command the servos to specific goal positions. In the GUI, the gripper would open when commanded to 360 degrees, and close when commanded to 36 degrees. However, when we tried to command the gripper to these positions via the API that we built, the gripper did not go to the expected position. It took several hours of debugging, and walking all the way down the stack to the dynamixel structures, before we finally discovered the issue. All of the dynamixel servos in our robot have a 180 degree offset. This means that the positional range of the servos only accepts values from -180 to 180 degrees. When we would command the gripper to 36 degrees, expecting it to close, it was actually going to what we understood to be 216 degrees, explaining why the gripper was not closing all of the way. After reflecting our discovery in our code we were able to accomplish accurate position control of our gripper!</p>
                             </div>
-                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                            <video class="blog-video" controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
                                 <source src="./assets/GripperControl.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>                            
@@ -690,15 +690,26 @@
 
         // Event listener for clicks outside of modals
         document.addEventListener("click", clickOutsideModal);
+    </script>
+    <!-- script for pausing and restarting videos after closing blog posts -->
+    <script>
+        // Get all video elements with the class "blog-video"
+        var videos = document.querySelectorAll('.blog-video');
 
+        // Loop through each video element
+        videos.forEach(function(video) {
+            // Get the corresponding close button for each video
+            var closeButton = video.closest('.blog-post').querySelector('.blog-close');
 
-
-
-
-
-
-
-
+            // Add click event listener to the close button
+            closeButton.addEventListener('click', function () {
+                // Pause the video
+                video.pause();
+                
+                // Reset the video to the beginning
+                video.currentTime = 0;
+            });
+        });
     </script>
 </body>
 </html>
