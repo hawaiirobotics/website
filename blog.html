@@ -22,6 +22,30 @@
             <h2 style="margin-top: 16px;">Blog</h2>
             <hr>
             <ul class="blog-list">
+                <!--Post 13-->
+                <li>
+                    <h2 class="blog-link">Gripper Load Limiting</h2>
+                    <h3 class="blog-date">Feb 13, 2023</h3>
+                    <div class="blog-post">
+                        <button type="button" class="blog-close">
+                            <img src="./assets/close button.svg" alt="Close" style="width: 2em; height: auto; margin: 0;">
+                        </button>
+                        <div class="blog-title-box">
+                            <h2 class="blog-title">Gripper Load Limiting</h2>
+                            <p class="blog-subtitle"></p>
+                        </div>
+                        <div class="blog-content">
+                            <div class="text-box">
+                                <p>The servo at the gripper joint on the arm doesn't have current control. Instead, the servo monitors the "present load" it experiences. The dynamixel can protect itself by detecting dangerous situations that could occur during the operation including overload protection. If the absolute value of the present load exceeds 1000 then the servo will trigger an overload error and stop the servo. This posed itself as problem for us because as someone controls the gripper, if they squeeze too hard while trying to grasp an object, the motor with error out and need to be reset. Since this present load register is accessible, we implemented a feature in the code to save the last "safe gripper position" each time a command is sent and the present load is greater than -300. Then if the present load ever exceeds -300, the command to the gripper servo is rejected unless the commanded servo position is greater than or equal to the last safe gripper position (the command is to open the gripper). This addition has been successful in ensuring that the gripper servo never experiences an overload error when gripping an object.</p>
+                            </div>
+                            <video controls autoplay loop width="640" height="360" style="max-width: 100%; height: auto; margin-top: 16px; display: block; margin-left: auto; margin-right: auto;">
+                                <source src="./assets/PresentLoadLimiting.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>        
+                        </div>
+                    </div>
+                </li>
+                <!--Post 13-->
                 <!--Post 12-->
                 <li>
                     <h2 class="blog-link">Encoder PCB Assembly</h2>
